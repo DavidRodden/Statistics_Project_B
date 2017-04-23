@@ -1,0 +1,12 @@
+---
+title: "Statistics Project 2"
+author: "David Rodden, Michael McIntosh, Khang Tran, Jeffrey Lazatin"
+date: "April 23, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Step 1: Collecting data*
