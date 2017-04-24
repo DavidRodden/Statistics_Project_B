@@ -17,6 +17,7 @@ sheet = read_excel("GDP.xlsx")
 #Country, GDP, LEB
 favstats(LEB ~ GDP, data = sheet)
 anova(lm(LEB ~ GDP, data = sheet))
+boxplot(GDP ~ LEB, data = sheet)
 ```
 
 *Introduction*
