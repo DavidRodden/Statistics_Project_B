@@ -13,9 +13,10 @@ library("gridExtra", lib.loc="~/R/win-library/3.3")
 library(readxl)
 ```
 ```{r}
-sheet = read_excel("Gdp.xlsx")
+sheet = read_excel("GDP.xlsx")
 #Country, GDP, LEB
 favstats(LEB ~ GDP, data = sheet)
+anova(lm(LEB ~ GDP, data = sheet))
 ```
 
 *Introduction*
