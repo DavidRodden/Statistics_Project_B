@@ -7,6 +7,28 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+require(mosaic); require(mosaicData); require(gridExtra)
+library("mosaic", lib.loc="~/R/win-library/3.3")
+library("gridExtra", lib.loc="~/R/win-library/3.3")
+library(readxl)
+```
+```{r}
+sheet = read_excel("Gdp.xlsx")
+#Country, GDP, LEB
+favstats(LEB ~ GDP, data = sheet)
 ```
 
-*Step 1: Collecting data*
+*Introduction*
+
+
+*Summary & Visualization*
+
+
+*Correlation Test*
+
+
+*Regression*
+
+
+*Teamwork*
+
