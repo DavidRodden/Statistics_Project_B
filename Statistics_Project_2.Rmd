@@ -90,6 +90,7 @@ Given the t statistic, $\approx `r t`$, and the p-value, $\approx `r p.value`$, 
 
 *Teamwork*
 
+As a team, we worked on coordinating meeting times. During the meetings, Michael collected and recorded data. After research, we discussed and analyzed it as a team. Following this, Michael and David typed the code within the RStudio environment as Jeffrey and Khang debugged and gave feedback. All data was protected by David Rodden's ingenious decision to upload resources to GitHub (https://github.com/DavidRodden/Statistics_Project_B). If any questions were had, Michael would follow up with the instructor for clarification.
 
 
 ```{r,include=FALSE}
