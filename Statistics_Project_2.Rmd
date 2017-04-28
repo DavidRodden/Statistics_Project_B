@@ -38,19 +38,36 @@ The scatter plot shows that there are a few outliers which will influence the ov
 
 ```{r}
 #five number summary
-sum.sheet <- summary(sheet)
-sum.sheet
+sum.sheet = summary(sheet); sum.sheet
 #standard deviation
-leb.sd <- sd(sheet$LEB)
-nlgdp.sd <- sd(sheet$NLGDP)
+gdp.sd = sd(sheet$GDP); gdp.sd
+leb.sd = sd(sheet$LEB); leb.sd
+nlgdp.sd = sd(sheet$NLGDP); nlgdp.sd
 ```
-The sample size is 180 countries. The means for GDP, Life expectancy at birth, and Natural log GDP are `r sum.sheet[4,2]`, `r sum.sheet[4,3]`, `r sum.sheet[4,4]`, respectively.
+The sample size is 180 countries. The means for GDP, Life expectancy at birth, and Natural log of GDP are `r sum.sheet[4,2]`, `r sum.sheet[4,3]`, `r sum.sheet[4,4]`, respectively.
 
+The standard deviation for GDP, Life expectancy, at birth and Natural log of GDP are $`r gdp.sd`$, $`r leb.sd`$, $`r nlgdp.sd`$ respectively.
 
 *Correlation Test*
 
+$H_0 : \rho = 0$ vs $H_a : \rho \neq 0$
+
+```{r}
+cor = cor.test(NLGDP, LEB)
+cor.p.value = cor$p.value
+```
+The p-value $\approx `r cor.p.value`$.
+As the p-value is very small, we reject the null hypothesis in favor of the alternative hypothesis that there is a non-zero correlation between Life expectancy at birth and the natural log of GDP.
 
 *Regression*
+
+```{r}
+mod = lm(LEB ~ NLGDP)
+y.hat = makeFun(mod); y.hat
+mod.prection = predict(mod)
+mod.resid = resid(mod); mod.resid
+```
+Using the regression model, $\hat{Y} = b_0 + b_1x$.
 
 
 *Teamwork*
