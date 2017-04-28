@@ -53,10 +53,10 @@ The standard deviation for GDP, Life expectancy, at birth and Natural log of GDP
 $H_0 : \rho = 0$ vs $H_a : \rho \neq 0$
 
 ```{r}
-cor = cor.test(NLGDP, LEB)
-cor.p.value = cor$p.value
+corr = cor.test(NLGDP, LEB)
+corr.p.value = corr$p.value
 ```
-The p-value $\approx `r cor.p.value`$.
+The p-value $\approx `r corr.p.value`$.
 As the p-value is very small, we reject the null hypothesis in favor of the alternative hypothesis that there is a non-zero correlation between Life expectancy at birth and the natural log of GDP.
 
 *Regression*
@@ -64,11 +64,29 @@ As the p-value is very small, we reject the null hypothesis in favor of the alte
 ```{r}
 mod = lm(LEB ~ NLGDP)
 y.hat = makeFun(mod); y.hat
-mod.prection = predict(mod)
-mod.resid = resid(mod); mod.resid
+mod.prediction = predict(mod); head(mod.prediction)
+mod.resid = resid(mod); head(mod.resid)
+mod.coef = unname(coef(mod)); mod.coef
 ```
-Using the regression model, $\hat{Y} = b_0 + b_1x$.
+Using the regression model, $\hat{Y} = \hat{\beta_0} + \hat{\beta_1}x = `r mod.coef[1]` + `r mod.coef[2]`x$
+We predict a value of $\hat{y} \approx `r mod.prediction[1]`$ using x $\approx `r NLGDP[1]`$ with a residual $\approx `r mod.resid[1]`$.
 
+```{r}
+sd.verify = max(na.omit(favs$sd)) > 2 * min(na.omit(favs$sd)); sd.verify
+n.verify = max(na.omit(favs$n)) >= 30; n.verify
+```
+Verifying conditions, we see that our data fails the standard deviation check for ANOVA.
+
+Despite the conditions for ANOVA testing not meeting their requirements, we will proceed with the ANOVA test anyhow.
+```{r}
+anova(mod)
+r = cor(LEB ~ NLGDP); r
+n = length(NLGDP)
+t = r * sqrt((n - 2) / (1 - r ^ 2)); t
+p.value = 2 * pt(-abs(t), df = n - 2)
+```
+Our evidence allows us to reject the null hypothesis in favor of the alternative hypothesis. We have a t-statistic value .
+Given the t statistic, $\approx `r t`$, and the p-value, $\approx `r p.value`$, we reject the null hypothesis with evidence for the alternative hypothesis. Our evidence from the data collected implies that there is a correlation between a country's life expectancy at birth and GDP.
 
 *Teamwork*
 
