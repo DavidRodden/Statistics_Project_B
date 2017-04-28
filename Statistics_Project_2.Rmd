@@ -7,23 +7,44 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-require(mosaic); require(mosaicData); require(gridExtra)
+require(mosaic); require(mosaicData); require(gridExtra); require(knitr)
 library("mosaic", lib.loc="~/R/win-library/3.3")
 library("gridExtra", lib.loc="~/R/win-library/3.3")
 library(readxl)
 ```
 ```{r}
 sheet = read_excel("GDP.xlsx")
-#Country, GDP, LEB
-favstats(LEB ~ GDP, data = sheet)
-anova(lm(LEB ~ GDP, data = sheet))
-boxplot(GDP ~ LEB, data = sheet)
+attach(sheet)
+#Country, GDP, LEB, NLLEB, NLGDP
 ```
 
 *Introduction*
 
+We are investigating the relationship between Life Expectancy of a country based upon its GDP. The data we are using was collected in 2003 from the CIA Factbook; the data is across 180 countries. The investigation is looking to see if there is a positive correlation between life expectancy (LEB) and a country's GDP (NLGDP); using GDP as a predictor. In order to normalize the data, we use the natural log of the GDP. The data considers a country's life expectancy at birth and the GDP per capita (PPP). The data was collected from official reports that each nation compiles. We found the data from *Index Mundi*, who pulled from the CIA Factbook. The data is a sample of the world's countries, and is an observational study.
+
+
+$H_0 : \rho = 0$ vs $H_a : \rho \neq 0$
+
 
 *Summary & Visualization*
+
+```{r}
+favs = favstats(LEB ~ NLGDP)
+anova.b = anova(lm(LEB ~ NLGDP))
+xyplot(LEB ~ NLGDP, type = c("p", "r"), pch=16, col="black")
+```
+The scatter plot shows that there are a few outliers which will influence the overall model. The outliers will impact the regression which we use to model and predict, based upon the data. There is a slight departure from linearity, a subtle curve in the data, but still increasing overall. The data does possesses changing variability, a fanning trend, wide to narrow from left to right. There appears to be a positive linear association between the two quantitative variables, LEB ~ NLGDP. 
+
+
+```{r}
+#five number summary
+sum.sheet <- summary(sheet)
+sum.sheet
+#standard deviation
+leb.sd <- sd(sheet$LEB)
+nlgdp.sd <- sd(sheet$NLGDP)
+```
+The sample size is 180 countries. The means for GDP, Life expectancy at birth, and Natural log GDP are `r sum.sheet[4,2]`, `r sum.sheet[4,3]`, `r sum.sheet[4,4]`, respectively.
 
 
 *Correlation Test*
@@ -34,3 +55,8 @@ boxplot(GDP ~ LEB, data = sheet)
 
 *Teamwork*
 
+
+
+```{r,include=FALSE}
+kable(sheet)
+```
